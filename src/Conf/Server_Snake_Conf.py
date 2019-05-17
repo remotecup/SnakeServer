@@ -1,0 +1,17 @@
+game_name       = 'Snake'
+agent_numbers   = 4
+max_i           = 30
+max_j           = 30
+max_cycle       = 5000
+ip              = "0.0.0.0"
+player_port     = 20002
+monitor_port    = 20003
+think_time      = 0.1
+auto_mode       = False
+sync_mode       = False
+rcg_logger      = True
+rcl_logger      = True
+wall_6_number   = 4
+wall_3_number   = 10
+wall_2_number   = 6
+change_goal_pos = 75
