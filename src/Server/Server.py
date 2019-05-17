@@ -1,5 +1,5 @@
-from Base.Server import *
-import Conf.Server_Snake_Conf as Conf
+from src.Base.Server import *
+import src.Conf.Server_Snake_Conf as Conf
 import random
 
 

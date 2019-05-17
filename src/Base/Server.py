@@ -3,16 +3,13 @@ import socket
 import threading
 import queue
 import datetime
-from Base.Message import *
-from Base.Math import *
-from Base.Logger import *
+from src.Base.Message import *
+from src.Base.Math import *
+from src.Base.Logger import *
 import signal
 import copy
-import Conf.conf as conf
-if conf.game == 'Simple':
-    import Conf.Server_Simple_Conf as Conf
-elif conf.game == 'Snake':
-    import Conf.Server_Snake_Conf as Conf
+import src.Conf.conf as conf
+import src.Conf.Server_Snake_Conf as Conf
 
 
 

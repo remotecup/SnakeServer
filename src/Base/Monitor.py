@@ -1,12 +1,12 @@
 from tkinter import *
 import socket
-from Base.Message import *
+from src.Base.Message import *
 import threading
 import time
 from tkinter import filedialog
 from tkinter import messagebox
 import signal
-import Conf.conf as conf
+import src.Conf.conf as conf
 if conf.game == 'Simple':
     import Conf.Monitor_Simple_Conf as Conf
     import Games.Simple.Monitor.Monitor as GameMonitor

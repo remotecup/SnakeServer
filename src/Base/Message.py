@@ -1,4 +1,4 @@
-from Base.Math import *
+from src.Base.Math import *
 
 
 class Message:
