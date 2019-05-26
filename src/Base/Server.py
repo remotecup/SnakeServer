@@ -171,15 +171,23 @@ class Server:
 
     def add_agent(self, address, message):
         if address not in self.agents:
-            self.agents[address] = copy.deepcopy(self.null_agent)
-            self.agents[address].name = message.client_name
-            self.agents[address].address = address
-            self.agents[address].id = len(self.agents)
-            print(self.dict_conf)
-            action_resp = MessageClientConnectResponse(self.agents[address].id, self.dict_conf).build()
+            duplicate_name = False
+            for ag in self.agents:
+                if self.agents[ag].name is message.client_name:
+                    duplicate_name = True
+            if duplicate_name:
+                logging.error('Client {} Duplicate Name'.format(address))
+                action_resp = MessageClientConnectResponse(-1, self.dict_conf).build()
+            else:
+                self.agents[address] = copy.deepcopy(self.null_agent)
+                self.agents[address].name = message.client_name
+                self.agents[address].address = address
+                self.agents[address].id = len(self.agents)
+                print(self.dict_conf)
+                action_resp = MessageClientConnectResponse(self.agents[address].id, self.dict_conf).build()
+                logging.info('agent {} connected on port number {}'
+                             .format(self.agents[address].name, self.agents[address].address))
             self.player_socket.sendto(action_resp, address)
-            logging.info('agent {} connected on port number {}'
-                         .format(self.agents[address].name, self.agents[address].address))
         else:
             logging.error('Client {} Want to Reconnect'.format(address))
 
