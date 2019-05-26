@@ -1,6 +1,6 @@
-from Base.Monitor import *
-from Base.Math import *
-import Conf.conf as conf
+from src.Base.Monitor import *
+from src.Base.Math import *
+import src.Conf.Monitor_Snake_Conf as conf
 
 
 class Ground:
