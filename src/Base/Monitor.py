@@ -137,13 +137,12 @@ class CResults:
         self.team_results.append(Label(self.results, text='Fourth_team: 0', bg='gray60', fg=simple_color[4]))
         self.team_results[-1].place(x=200, y=20)
 
-    def update(self, score):
+    def update(self, score, name_id):
         for i in range(4):
             self.team_results[i]['text'] = str(0)
-        i = 0
         for key in score.keys():
-            self.team_results[i]['text'] = key + ':' + str(score[key])
-            i += 1
+            id = name_id[key]
+            self.team_results[id - 1]['text'] = key + ':' + str(score[key])
 
 
 class CToolbar:
@@ -258,7 +257,7 @@ class MainWindow:
 
     def show_message(self, message):
         self.ground.show_board(message.world)
-        self.results.update(message.score)
+        self.results.update(message.score, message.name_id)
 
     def short_cut_key(self):
         self.root.bind("<space>", self.gui.play_pause)
