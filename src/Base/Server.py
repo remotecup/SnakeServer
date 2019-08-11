@@ -213,13 +213,13 @@ class Server:
 
     def send_visual_to_monitors(self):
         score = dict([(self.agents[key].name, self.agents[key].score) for key in self.agents])
-        message = MessageClientWorld(self.cycle, self.world, score).build()
+        message = MessageClientWorld(self.cycle, self.world, score, {self.agents[key].name: self.agents[key].id for key in self.agents}).build()
         for key in self.monitors:
             self.player_socket.sendto(message, key)
 
     def send_world(self):
         score = dict([(self.agents[key].name, self.agents[key].score) for key in self.agents])
-        message = MessageClientWorld(self.cycle, self.world, score).build()
+        message = MessageClientWorld(self.cycle, self.world, score, {self.agents[key].name: self.agents[key].id for key in self.agents}).build()
         for key in self.agents:
             self.player_socket.sendto(message, key)
 
