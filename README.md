@@ -31,4 +31,10 @@
 
 > to change algorithm in python ...
 
+> in monitor_config
+'''python
+monitor_height=800  # set height for monitor window
+monitor_width=800   # set width for monitor window
+'''
+
  
