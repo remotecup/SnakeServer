@@ -164,6 +164,7 @@ class SnakeServer(Server):
                     if self.agents[key].next_head in self.agents[s].body[:len(self.agents[s].body) - 1]:
                         if self.agents[key].next_head == self.agents[s].head:
                             self.agents[s].reset(self)
+                            self.agents[s].score -= 5
                         snake_accident = True
                         break
                 logging.error('afterrrrrrrr forrrrrr')
