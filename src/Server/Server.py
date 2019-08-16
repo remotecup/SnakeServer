@@ -160,13 +160,16 @@ class SnakeServer(Server):
             else:
                 logging.error('elseeeeeeee')
                 snake_accident = False
+                dead_keys = []
                 for s in self.agents:
                     if self.agents[key].next_head in self.agents[s].body[:len(self.agents[s].body) - 1]:
                         if self.agents[key].next_head == self.agents[s].head:
-                            self.agents[s].reset(self)
-                            self.agents[s].score -= 5
+                            if s not in dead_keys and s != key:
+                                dead_keys.append(s)
                         snake_accident = True
-                        break
+                for k in dead_keys:
+                    self.agents[k].reset(self)
+                    self.agents[k].score -= 5
                 logging.error('afterrrrrrrr forrrrrr')
                 if snake_accident:
                     logging.error('agent {} in other'.format(self.agents[key].id))
