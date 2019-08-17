@@ -122,10 +122,13 @@ class SnakeServer(Server):
                           'team_number': Conf.agent_numbers, 'goal_id': Conf.agent_numbers + 1}
         self.world = {'board': None, 'heads': {}}
         self.start_snake_body = {}
-        self.start_snake_body[1] = [Vector2D(1, 3),Vector2D(1, 2),Vector2D(1, 1)]
-        self.start_snake_body[2] = [Vector2D(1, Conf.max_j - 4), Vector2D(1, Conf.max_j - 3), Vector2D(1, Conf.max_j - 2)]
-        self.start_snake_body[3] = [Vector2D(Conf.max_i - 2, 3), Vector2D(Conf.max_i - 2, 2), Vector2D(Conf.max_i - 2, 1)]
-        self.start_snake_body[4] = [Vector2D(Conf.max_i - 2, Conf.max_j - 4), Vector2D(Conf.max_i - 2, Conf.max_j - 3), Vector2D(Conf.max_i - 2, Conf.max_j - 2)]
+        self.start_snake_body[1] = [Vector2D(1, 3), Vector2D(1, 2), Vector2D(1, 1)]
+        self.start_snake_body[2] = [Vector2D(1, Conf.max_j - 4), Vector2D(1, Conf.max_j - 3),
+                                    Vector2D(1, Conf.max_j - 2)]
+        self.start_snake_body[3] = [Vector2D(Conf.max_i - 2, 3), Vector2D(Conf.max_i - 2, 2),
+                                    Vector2D(Conf.max_i - 2, 1)]
+        self.start_snake_body[4] = [Vector2D(Conf.max_i - 2, Conf.max_j - 4), Vector2D(Conf.max_i - 2, Conf.max_j - 3),
+                                    Vector2D(Conf.max_i - 2, Conf.max_j - 2)]
         self.goal_id = 5
         self.goal_ate = False
         self.last_cycle_ate = 0
@@ -140,7 +143,8 @@ class SnakeServer(Server):
             self.agents[key].next_head = self.normalize_pos(self.agents[key].next_head)
             logging.error('wall size:{}'.format(len(self.wall_poses)))
             if self.agents[key].next_head in self.wall_poses:
-                logging.error('agent {} in wall body {}'.format(self.agents[key].id, [str(x) for x in self.agents[key].body]))
+                logging.error(
+                    'agent {} in wall body {}'.format(self.agents[key].id, [str(x) for x in self.agents[key].body]))
                 self.agents[key].reset(self)
                 logging.error(
                     'agent {} in wall body {}'.format(self.agents[key].id, [str(x) for x in self.agents[key].body]))
@@ -176,7 +180,8 @@ class SnakeServer(Server):
                     self.agents[key].reset(self)
                     self.agents[key].score -= 5
                 else:
-                    logging.error('agent {} go body {}'.format(self.agents[key].id, [str(x) for x in self.agents[key].body]))
+                    logging.error(
+                        'agent {} go body {}'.format(self.agents[key].id, [str(x) for x in self.agents[key].body]))
                     end_body = self.agents[key].body[-1]
                     logging.error('agent {} end is {}'.format(self.agents[key].id, end_body))
                     self.world['board'][end_body.i][end_body.j] = 0
@@ -184,8 +189,10 @@ class SnakeServer(Server):
                     del self.agents[key].body[-1]
                     self.agents[key].head = copy.deepcopy(self.agents[key].next_head)
                     logging.error('agent {} next head is {}'.format(self.agents[key].id, self.agents[key].next_head))
-                    self.world['board'][self.agents[key].next_head.i][self.agents[key].next_head.j] = self.agents[key].id
-                    logging.error('agent {} go body {}'.format(self.agents[key].id, [str(x) for x in self.agents[key].body]))
+                    self.world['board'][self.agents[key].next_head.i][self.agents[key].next_head.j] = self.agents[
+                        key].id
+                    logging.error(
+                        'agent {} go body {}'.format(self.agents[key].id, [str(x) for x in self.agents[key].body]))
                     self.print_world()
 
         self.world['heads'].clear()
@@ -342,6 +349,12 @@ class SnakeServer(Server):
         except:
             print()
         temp_positions = [Vector2D(x, y) for x in range(Conf.max_i) for y in range(Conf.max_j)]
+        snake_places = [
+            Vector2D(1, 1), Vector2D(1, 2), Vector2D(1, 3),
+            Vector2D(1, 26), Vector2D(1, 27), Vector2D(1, 28),
+            Vector2D(28, 1), Vector2D(28, 2), Vector2D(28, 3),
+            Vector2D(28, 26), Vector2D(28, 27), Vector2D(28, 28),
+        ]
         random.shuffle(temp_positions)
         random.shuffle(temp_positions)
         print(self.wall_poses)
@@ -356,6 +369,8 @@ class SnakeServer(Server):
                     in_snakes = True
                     break
             if in_snakes:
+                continue
+            if pos in snake_places:
                 continue
             print(pos, 'is ok')
             self.goal_pos = pos
