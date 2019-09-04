@@ -137,8 +137,11 @@ class SnakeServer(Server):
         logging.debug('Update Worlddddd')
         self.goal_ate = False
         keys = list(self.agents.keys())
+        agent_reseted = []
         random.shuffle(keys)
         for key in keys:
+            if key in agent_reseted:
+                continue
             self.agents[key].update_next()
             self.agents[key].next_head = self.normalize_pos(self.agents[key].next_head)
             logging.error('wall size:{}'.format(len(self.wall_poses)))
@@ -173,6 +176,7 @@ class SnakeServer(Server):
                         snake_accident = True
                 for k in dead_keys:
                     self.agents[k].reset(self)
+                    agent_reseted.append(k)
                     self.agents[k].score -= 5
                 logging.error('afterrrrrrrr forrrrrr')
                 if snake_accident:
