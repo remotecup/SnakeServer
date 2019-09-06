@@ -9,8 +9,6 @@ import signal
 import copy
 import src.Conf.Server_Snake_Conf as Conf
 
-
-
 is_run = True
 
 
@@ -21,7 +19,6 @@ def signal_handler(sig, frame):
 
 
 signal.signal(signal.SIGINT, signal_handler)
-
 
 log_file_name = datetime.datetime.now().strftime('{}-%Y-%m-%d-%H-%M-%S'.format(Conf.game_name))
 rcg_logger = setup_logger('rcg_logger', log_file_name + '.rcg')
@@ -148,6 +145,10 @@ class Server:
                 try:
                     msg = self.action_queue.get(block=True, timeout=0.001)
                     logging.debug('Receive {}'.format(msg))
+                except KeyboardInterrupt:
+                    is_run = False
+                    self.send_disconnected()
+                    break
                 except:
                     continue
                 self.action_parse(msg)
@@ -213,13 +214,15 @@ class Server:
 
     def send_visual_to_monitors(self):
         score = dict([(self.agents[key].name, self.agents[key].score) for key in self.agents])
-        message = MessageClientWorld(self.cycle, self.world, score, {self.agents[key].name: self.agents[key].id for key in self.agents}).build()
+        message = MessageClientWorld(self.cycle, self.world, score,
+                                     {self.agents[key].name: self.agents[key].id for key in self.agents}).build()
         for key in self.monitors:
             self.player_socket.sendto(message, key)
 
     def send_world(self):
         score = dict([(self.agents[key].name, self.agents[key].score) for key in self.agents])
-        message = MessageClientWorld(self.cycle, self.world, score, {self.agents[key].name: self.agents[key].id for key in self.agents}).build()
+        message = MessageClientWorld(self.cycle, self.world, score,
+                                     {self.agents[key].name: self.agents[key].id for key in self.agents}).build()
         for key in self.agents:
             self.player_socket.sendto(message, key)
 
