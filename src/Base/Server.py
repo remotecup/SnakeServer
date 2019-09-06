@@ -244,7 +244,7 @@ class Server:
         if not Conf.rcg_logger:
             return
         score = dict([(self.agents[key].name, self.agents[key].score) for key in self.agents])
-        rcg_logger.info('{}'.format(MessageRCGCycle(self.cycle, self.world, score).build()))
+        rcg_logger.info('{}'.format(MessageRCGCycle(self.cycle, self.world, score, {self.agents[key].name: self.agents[key].id for key in self.agents}).build()))
 
     def save_rcl(self, id, string_message, vector_action):
         if not Conf.rcl_logger:

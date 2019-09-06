@@ -198,14 +198,15 @@ class MessageRCGHeader(Message):
 
 
 class MessageRCGCycle(Message):
-    def __init__(self, cycle, world, score):
+    def __init__(self, cycle, world, score, name_id):
         self.type = "MessageRCGCycle"
         self.cycle = cycle
         self.world = world
         self.score = score
+        self.name_id = name_id
 
     def build(self):
-        msg = {"message_type": self.type, "value": {"cycle": self.cycle, "score": self.score, "world": self.world}}
+        msg = {"message_type": self.type, "value": {"cycle": self.cycle, "score": self.score, "world": self.world, "name_id": self.name_id}}
         str_msg = str(msg)
         return str_msg
 
@@ -216,7 +217,8 @@ class MessageRCGCycle(Message):
             cycle = msg['value']['cycle']
             world = msg['value']['world']
             score = msg['value']['score']
-            message = MessageRCGCycle(cycle, world, score)
+            name_id = msg['value']['name_id']
+            message = MessageRCGCycle(cycle, world, score, name_id)
             return True, message
         return False, None
 
