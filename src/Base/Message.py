@@ -228,42 +228,69 @@ class MessageRCGCycle(Message):
 
 
 def parse(coded_msg):
-    ret = MessageRCGHeader.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
+    try:
+        ret = MessageRCGHeader.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
+        pass
 
-    ret = MessageRCGCycle.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
+    try:
+        ret = MessageRCGCycle.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
 
-    ret = MessageClientConnectRequest.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
+    try:
+        ret = MessageClientConnectRequest.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
 
-    ret = MessageClientConnectResponse.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
+    try:
+        ret = MessageClientConnectResponse.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
 
-    ret = MessageClientDisconnect.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
+    try:
+        ret = MessageClientDisconnect.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
 
-    ret = MessageMonitorConnectRequest.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
+    try:
+        ret = MessageMonitorConnectRequest.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
 
-    ret = MessageMonitorConnectResponse.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
+    try:
+        ret = MessageMonitorConnectResponse.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
 
-    ret = MessageClientAction.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
+    try:
+        ret = MessageClientAction.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
 
-    ret = MessageClientWorld.parse(coded_msg)
-    if ret[0]:
-        return ret[1]
-
+    try:
+        ret = MessageClientWorld.parse(coded_msg)
+        if ret[0]:
+            return ret[1]
+    except:
+        print('big error in parse')
 
 
     return Message()
