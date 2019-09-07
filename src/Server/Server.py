@@ -329,13 +329,17 @@ class SnakeServer(Server):
     def action_parse(self, msg):
         message = parse(msg[0])
         address = msg[1]
-        if message.type is not 'MessageClientAction':
-            logging.error('message type is not action, client: {}'
-                          .format(self.agents.get(address, Agent()).name))
-            return False
         if address not in self.agents:
             logging.error('message from invalid address, address: {}'.format(address))
             return False
+        if message.type is not 'MessageClientAction':
+            logging.error('message type is not action, client: {}'
+                          .format(self.agents.get(address, Agent()).name))
+            if self.agents[address].last_action_cycle < self.cycle:
+                self.agents[address].last_action_cycle = self.cycle
+                self.receive_action += 1
+            return False
+
         action = action_to_vector(message.string_action)
         self.save_rcl(self.agents[address].id, message.string_message, action)
         if action is None:
