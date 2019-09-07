@@ -190,15 +190,15 @@ class MessageRCGHeader(Message):
         # msg = eval(str(coded_msg.decode("utf-8")))
         try:
             msg = eval(coded_msg)
+            if msg['message_type'] == "MessageRCGHeader":
+                teams = msg['value']['teams']
+                ground_config = msg['value']['ground_config']
+                message = MessageRCGHeader(teams, ground_config)
+                return True, message
+            return False, None
         except:
             print('cant parse rcg header')
             return False, None
-        if msg['message_type'] == "MessageRCGHeader":
-            teams = msg['value']['teams']
-            ground_config = msg['value']['ground_config']
-            message = MessageRCGHeader(teams, ground_config)
-            return True, message
-        return False, None
 
 
 class MessageRCGCycle(Message):
