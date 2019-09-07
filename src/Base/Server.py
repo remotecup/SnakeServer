@@ -140,7 +140,7 @@ class Server:
             start_time_cycle = time.time()
 
             self.receive_action = 0
-            while (Conf.sync_mode and (self.receive_action < Conf.agent_numbers or time.time() - start_time_cycle < Conf.think_time * 10)) \
+            while (Conf.sync_mode and (self.receive_action < Conf.agent_numbers)) \
                     or (not Conf.sync_mode and time.time() - start_time_cycle < Conf.think_time):
                 try:
                     msg = self.action_queue.get(block=True, timeout=0.001)
@@ -152,6 +152,8 @@ class Server:
                 except:
                     continue
                 self.action_parse(msg)
+                if Conf.sync_mode and (time.time() - start_time_cycle > Conf.think_time * 10):
+                    break
 
             while self.action_queue.qsize() > 0:
                 self.action_queue.get()
