@@ -188,7 +188,11 @@ class MessageRCGHeader(Message):
     @staticmethod
     def parse(coded_msg):
         # msg = eval(str(coded_msg.decode("utf-8")))
-        msg = eval(coded_msg)
+        try:
+            msg = eval(coded_msg)
+        except:
+            print('cant parse rcg header')
+            pass
         if msg['message_type'] == "MessageRCGHeader":
             teams = msg['value']['teams']
             ground_config = msg['value']['ground_config']
