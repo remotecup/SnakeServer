@@ -192,7 +192,7 @@ class MessageRCGHeader(Message):
             msg = eval(coded_msg)
         except:
             print('cant parse rcg header')
-            pass
+            return False, None
         if msg['message_type'] == "MessageRCGHeader":
             teams = msg['value']['teams']
             ground_config = msg['value']['ground_config']
